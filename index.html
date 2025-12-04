@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!--
+      MindMatrix – Simple Mental Health Tracker
+
+      This HTML document defines a small single‑page web application for a
+      mental wellbeing self‑check. To personalise the app you can update
+      any of the text contained between tags (for example titles, button
+      labels or descriptive paragraphs). See the notes throughout this
+      document for guidance on what can safely be changed without
+      affecting the core behaviour implemented in JavaScript.
+
+      For a professional look and improved search engine visibility you
+      might also customise the meta description below.
+    -->
+    <title>MindMatrix – Simple Mental Health Tracker</title>
+    <meta
+      name="description"
+      content="MindMatrix is a simple mental wellbeing check‑in tool that lets you reflect on your mood, energy and stress levels."
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+      Link to the stylesheet. The file css/style.css contains all
+      colour definitions, spacing rules and component styles. If you
+      prefer different colours simply adjust the CSS variables defined
+      at the top of that file.
+    -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <!--
+        TOP BRAND BAR
+        You can update the logo image by replacing assets/logo.png or
+        remove the <img> element entirely if you don’t want a logo.
+        The brand name text can also be edited here.
+      -->
+      <header class="top-bar">
+        <div class="brand">
+          <img src="assets/logo.png" alt="MindMatrix Logo" class="brand-logo" />
+          <span class="brand-name">MindMatrix</span>
+        </div>
+      </header>
+
+      <!-- MAIN APPLICATION AREA -->
+      <main id="app">
+        <!--
+          SCREEN 1: WELCOME
+          Edit the title and subtitle paragraphs to greet your users.
+        -->
+        <section class="screen active" id="welcomeScreen">
+          <div class="screen-body">
+            <h1 class="title">Welcome to MindMatrix</h1>
+            <p class="subtitle">
+              A gentle, quick check‑in to help you understand your mood,
+              energy and stress levels. This tool is designed for
+              self‑reflection only and does not provide any diagnosis.
+            </p>
+          </div>
+          <div class="screen-footer center">
+            <button id="btnStartWelcome" class="btn btn-primary">
+              Start
+            </button>
+          </div>
+        </section>
+
+        <!--
+          SCREEN 2: BASIC INFO FORM
+          Ask the user for basic details. These inputs include the
+          required attribute so browsers assist with validation. You can
+          modify labels and placeholder text, but keep the input name
+          attributes intact for the JavaScript to collect the values.
+        -->
+        <section class="screen" id="infoScreen">
+          <div class="screen-body">
+            <h2 class="title">Before We Begin</h2>
+            <p class="subtitle">
+              Tell us a little about yourself. We’ll use this to personalise
+              your report.
+            </p>
+
+            <form id="infoForm" class="info-form" novalidate>
+              <!-- Name -->
+              <div class="form-group">
+                <label for="name">Name *</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Enter your name"
+                  required
+                />
+                <small class="error-message" aria-live="polite"></small>
+              </div>
+
+              <!-- Age -->
+              <div class="form-group">
+                <label for="age">Age *</label>
+                <input
+                  type="number"
+                  id="age"
+                  name="age"
+                  min="10"
+                  max="120"
+                  placeholder="Enter your age"
+                  required
+                />
+                <small class="error-message" aria-live="polite"></small>
+              </div>
+
+              <!-- Gender -->
+              <div class="form-group">
+                <label>Gender *</label>
+                <div class="radio-row">
+                  <label>
+                    <input type="radio" name="gender" value="Male" />
+                    Male
+                  </label>
+                  <label>
+                    <input type="radio" name="gender" value="Female" />
+                    Female
+                  </label>
+                  <label>
+                    <input type="radio" name="gender" value="Other" />
+                    Other
+                  </label>
+                </div>
+                <small class="error-message" aria-live="polite"></small>
+              </div>
+
+              <!-- Contact Number -->
+              <div class="form-group">
+                <label for="contact">Contact Number *</label>
+                <input
+                  type="tel"
+                  id="contact"
+                  name="contact"
+                  inputmode="numeric"
+                  pattern="\d{7,15}"
+                  placeholder="e.g. 9876543210"
+                  required
+                />
+                <small class="error-message" aria-live="polite"></small>
+              </div>
+
+              <!-- Email Address -->
+              <div class="form-group">
+                <label for="email">Email ID *</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="you@example.com"
+                  required
+                />
+                <small class="error-message" aria-live="polite"></small>
+              </div>
+
+              <div class="screen-footer center">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!--
+          SCREEN 3: START TRACKING
+          Briefly explain how many questions will be asked. Adjust the
+          count in the text if you add or remove questions from
+          questions[] in script.js.
+        -->
+        <section class="screen" id="startTrackingScreen">
+          <div class="screen-body">
+            <h2 class="title">Start Tracking</h2>
+            <p class="subtitle">
+              You’ll answer ten short questions about how you’ve been
+              feeling recently. Try to go with your first honest response.
+            </p>
+          </div>
+          <div class="screen-footer center">
+            <button id="btnStartQuestions" class="btn btn-primary">
+              Start
+            </button>
+          </div>
+        </section>
+
+        <!--
+          SCREEN 4: QUESTIONS
+          Question text and answer options are generated in
+          js/script.js. To customise the prompts or scale of the
+          responses edit the questions array in that file.
+        -->
+        <section class="screen" id="questionScreen">
+          <div class="screen-body">
+            <!-- “Question X of N” is inserted here via JavaScript -->
+            <p class="progress-text"></p>
+
+            <!-- The question text is inserted by JavaScript -->
+            <h2 id="questionText" class="question-text"></h2>
+
+            <!-- Radio options are inserted here via JavaScript -->
+            <div id="optionsContainer" class="options-container"></div>
+
+            <p class="hint">Tap an answer to go to the next question.</p>
+          </div>
+          <div class="screen-footer right" id="questionFooter">
+            <!-- The Finish button only appears on the last question -->
+            <button id="btnFinish" class="btn btn-secondary hidden">
+              Finish
+            </button>
+          </div>
+        </section>
+
+        <!--
+          SCREEN 5: SCORE
+          Display the computed wellbeing score and a brief message.
+        -->
+        <section class="screen" id="scoreScreen">
+          <div class="screen-body center-column">
+            <h2 class="title">Your Wellbeing Score</h2>
+            <!-- The score value is populated by the script -->
+            <div id="scoreValue" class="score-value">0</div>
+            <p class="subtitle">
+              This score is based on your answers across mood, stress,
+              sleep and support. Higher scores suggest you’re currently
+              feeling more balanced.
+            </p>
+          </div>
+          <div class="screen-footer center">
+            <button id="btnSeeReport" class="btn btn-primary">
+              See Your Report
+            </button>
+          </div>
+        </section>
+
+        <!--
+          SCREEN 6: REPORT
+          Your personalised feedback is assembled via JavaScript based on
+          the calculated score and the user’s name. You can alter the
+          headings and descriptive text here if desired; avoid removing
+          the id attributes as they are required by the script.
+        -->
+        <section class="screen" id="reportScreen">
+          <div class="screen-body">
+            <h2 class="title" id="reportTitle"></h2>
+            <p id="reportSummary" class="subtitle"></p>
+            <div id="reportSuggestions" class="suggestions"></div>
+          </div>
+          <div class="screen-footer center">
+            <!-- Restart button: resets the questionnaire. Remove this
+                 button if you don’t want users to retake the survey. -->
+            <button id="btnRestart" class="btn btn-secondary">
+              Start Over
+            </button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!--
+      Link to the application logic. The script file contains the
+      questions and suggestions as well as all event handlers. If you
+      need to adjust the number or content of the questions simply edit
+      the questions array in js/script.js.
+    -->
+    <script src="js/script.js"></script>
+  </body>
+</html>

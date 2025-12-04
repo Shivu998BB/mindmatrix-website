@@ -1,0 +1,426 @@
+/* =====================================================
+   THEME VARIABLES
+
+   All colours, radii and shadow definitions live here. To
+   customise the look of your app simply change these values.
+   For example, altering --primary will update all primary
+   buttons automatically. Keep the contrast between text and
+   backgrounds sufficient for readability.
+*/
+:root {
+  --bg-color: #f5f7fb;
+  --card-bg: #ffffff;
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --secondary: #00c9a7;
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --border-subtle: #e5e7eb;
+  --error: #dc2626;
+  --radius-lg: 18px;
+  --radius-md: 10px;
+  --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.12);
+}
+
+/*
+  Automatically swap to a darker palette when the user’s
+  operating system is in dark mode. Feel free to adjust these
+  values if you want a different dark theme.
+*/
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --text-main: #e2e8f0;
+    --text-muted: #94a3b8;
+    --border-subtle: #334155;
+    --shadow-soft: 0 18px 45px rgba(2, 6, 23, 0.5);
+  }
+}
+
+/* ============================
+   GLOBAL RESET + BODY
+============================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
+  /* Enable smooth scrolling when navigating between anchors */
+  scroll-behavior: smooth;
+}
+
+/* ============================
+   APP SHELL & TOP BAR
+============================= */
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.top-bar {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border-subtle);
+  background-color: #ffffffaa;
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-logo {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.brand-name {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--primary);
+}
+
+/* ============================
+   MAIN APP SCREENS
+============================= */
+#app {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 20px 14px 30px;
+}
+
+.screen {
+  width: 100%;
+  max-width: 540px; /* smaller width */
+  max-height: 85vh; /* reduce height */
+  background-color: var(--card-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  display: none;
+  flex-direction: column;
+  padding: 22px 20px 18px; /* reduced padding */
+  position: relative;
+  margin: auto; /* centers vertically & horizontally */
+}
+
+
+.screen.active {
+  display: flex;
+}
+
+.screen-body {
+  flex: 1;
+}
+
+.center-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* ============================
+   TYPOGRAPHY
+============================= */
+.title {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 0.98rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+/* ============================
+   FOOTERS / BUTTON POSITIONING
+============================= */
+.screen-footer {
+  display: flex;
+  margin-top: 20px;
+}
+
+.screen-footer.center {
+  justify-content: center;
+}
+
+.screen-footer.right {
+  justify-content: flex-end;
+}
+
+/* ============================
+   BUTTONS
+============================= */
+.btn {
+  border: none;
+  border-radius: 999px;
+  padding: 10px 26px;
+  font-size: 0.98rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease,
+    background-color 0.2s ease;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background-color: #e5f4ff;
+  color: var(--primary);
+  box-shadow: none;
+  transition: background-color 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #d1e9ff;
+}
+
+/* Add a subtle focus ring for buttons when using keyboard navigation */
+.btn:focus {
+  outline: 3px solid rgba(37, 99, 235, 0.4);
+  outline-offset: 2px;
+}
+
+/* Remove the default spin buttons from number inputs for a cleaner look */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  appearance: textfield; /* hides spin buttons in Firefox */
+}
+
+/* Utility */
+.hidden {
+  display: none !important;
+}
+
+/* ============================
+   FORM STYLES (INFO FORM)
+============================= */
+.info-form {
+  margin-top: 16px;
+}
+
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="tel"],
+.form-group input[type="email"] {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-group input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+}
+
+.radio-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  font-size: 0.95rem;
+}
+
+.radio-row input {
+  margin-right: 4px;
+}
+
+.error-message {
+  font-size: 0.8rem;
+  color: var(--error);
+  margin-top: 4px;
+}
+
+/* ============================
+   QUESTION SCREEN
+============================= */
+.progress-text {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.question-text {
+  font-size: 1.3rem;
+  margin-bottom: 16px;
+}
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option-pill {
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  padding: 9px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    transform 0.05s ease;
+  font-size: 0.95rem;
+}
+
+.option-pill input[type="radio"] {
+  display: none;
+}
+
+.option-pill span.option-label {
+  flex: 1;
+}
+
+.option-pill span.option-score {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background-color: #eff6ff;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+/* Better hover styling for visibility */
+.option-pill:hover {
+  border-color: var(--primary);
+  background-color: rgba(37, 99, 235, 0.10); /* subtle tinted blue */
+  color: var(--text-main);                  /* ensures text stays visible */
+  transform: translateY(-1px);
+}
+
+
+.option-pill.selected {
+  border-color: var(--primary);
+  background-color: var(--primary);
+  color: #ffffff;
+}
+
+.option-pill.selected .option-score {
+  background-color: #ffffff33;
+  color: #ffffff;
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 14px;
+}
+
+/* ============================
+   SCORE SCREEN
+============================= */
+.score-value {
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: var(--secondary);
+  margin: 12px 0 10px;
+}
+
+/* ============================
+   REPORT SCREEN
+============================= */
+.suggestions {
+  margin-top: 18px;
+  padding: 20px 18px;
+  border-radius: 12px;
+  background-color: #f0f4ff;          /* soft light-blue background */
+  border: 1px solid #cdd9ff;          /* subtle border */
+}
+
+.suggestions h3 {
+  color: #1e3a8a;                     /* deep readable blue */
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.suggestions ul {
+  margin-left: 18px;
+  margin-top: 6px;
+}
+
+.suggestions li {
+  color: #1e293b;                     /* near-black text for clarity */
+  line-height: 1.55;
+  margin-bottom: 8px;
+}
+
+/* ============================
+   RESPONSIVE
+============================= */
+@media (max-width: 600px) {
+  .screen {
+    padding: 20px 18px 16px;
+    border-radius: 14px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .question-text {
+    font-size: 1.15rem;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .screen-footer.right {
+    justify-content: center; /* center Finish button on small screens */
+  }
+}
